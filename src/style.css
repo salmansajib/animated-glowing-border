@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@property --crl-1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(70.5% 0.213 47.604);
+}
+@property --crl-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(79.5% 0.184 86.047);
+}
+@property --crl-3 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(72.3% 0.219 149.579);
+}
+@property --crl-4 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(68.5% 0.169 237.323);
+}
+@property --crl-5 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(62.7% 0.265 303.9);
+}
+
+@property --glow-deg {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: -90deg;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Fira Sans", sans-serif;
+  /* color-scheme: dark; */
+}
+
+body {
+  /* --bg-home: #333; */
+  overflow-x: clip;
+  background: var(--bg-home);
+}
+
+.glowing-border {
+  --gradient-glow: var(--crl-1), var(--crl-2), var(--crl-3), var(--crl-4),
+    var(--crl-5), var(--crl-1);
+  --border-width: 2px;
+
+  margin-block: 3rem;
+  padding: 8rem 3rem;
+  max-width: 60ch;
+  text-align: center;
+
+  border: var(--border-width, 3px) solid transparent;
+  border-left: 0;
+  border-radius: 0 100vw 100vw 0;
+  background: linear-gradient(var(--bg-home, canvas) 0 0) padding-box,
+    conic-gradient(from var(--glow-deg), var(--gradient-glow)) border-box;
+
+  position: relative;
+  isolation: isolate;
+  animation: glow 15s infinite linear;
+}
+
+@keyframes glow {
+  100% {
+    --glow-deg: 630deg;
+  }
+}
+
+.glowing-border::before,
+.glowing-border::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+}
+
+.glowing-border::before {
+  z-index: -1;
+  background: var(--bg-home, canvas);
+  inset: 0.5rem;
+  scale: 1.2 1;
+  transform-origin: right;
+  filter: blur(var(--glow-size, 1.5rem));
+}
+
+.glowing-border::after {
+  z-index: -2;
+  inset: -1.5rem;
+  background: conic-gradient(from var(--glow-deg), var(--gradient-glow));
+  filter: blur(var(--glow-size, 1.5rem));
+  opacity: var(--glow-intensity, 0.125);
+}
+
+.glowing-border.right {
+  margin-inline-start: auto;
+  border-radius: 100vw 0 0 100vw;
+  border: var(--border-width, 3px) solid transparent;
+  border-right: 0;
+
+  &::before {
+    transform-origin: left;
+  }
+}
+
+.glowing-border h1 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.glowing-border p {
+  font-size: 16px;
+  font-weight: 200;
+  line-height: 1.3;
+}
