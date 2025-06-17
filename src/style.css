@@ -69,12 +69,12 @@ body {
 
   position: relative;
   isolation: isolate;
-  animation: glow 15s infinite linear;
+  animation: glow 10s infinite linear;
 }
 
 @keyframes glow {
   100% {
-    --glow-deg: 630deg;
+    --glow-deg: 270deg;
   }
 }
 
